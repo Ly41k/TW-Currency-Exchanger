@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -30,6 +31,17 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.runtime)
+
+            implementation(libs.odyssey.core)
+            implementation(libs.odyssey.compose)
+
+            implementation(libs.kviewmodel.core)
+            implementation(libs.kviewmodel.compose)
+            implementation(libs.kviewmodel.odyssey)
+
+            implementation(libs.kodein)
+
+            implementation(libs.kotlin.serialization)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
