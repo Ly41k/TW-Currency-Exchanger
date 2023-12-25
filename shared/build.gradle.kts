@@ -6,6 +6,8 @@ plugins {
 }
 
 kotlin {
+
+
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -42,15 +44,25 @@ kotlin {
             implementation(libs.kodein)
 
             implementation(libs.kotlin.serialization)
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.json)
+            implementation(libs.ktor.serialization)
+            implementation(libs.ktor.content.negotiation)
+            implementation(libs.ktor.kotlinx.json)
+            implementation(libs.ktor.logging)
+
+            implementation(libs.settings)
+            implementation(libs.settings.noarg)
         }
 
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.android.material)
-            }
+        androidMain.dependencies {
+            implementation(libs.android.material)
+            implementation(libs.ktor.android)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.ios)
         }
     }
 }
