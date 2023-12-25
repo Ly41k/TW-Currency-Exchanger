@@ -1,12 +1,13 @@
 package com.example.twcurrencyexchanger.android
 
+import MainView
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("TESTING_TAG", "ok")
+        setContent { MainView(this) }
     }
 }

@@ -15,6 +15,8 @@ kviewmodel = "0.14"
 
 serialization = "1.5.0"
 
+material = "1.9.0"
+
 [libraries]
 kodein = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }
 
@@ -26,6 +28,8 @@ kviewmodel-compose = { module = "com.adeo:kviewmodel-compose", version.ref = "kv
 kviewmodel-odyssey = { module = "com.adeo:kviewmodel-odyssey", version.ref = "kviewmodel" }
 
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+android-material = { module = "com.google.android.material:material", version.ref = "material" }
 
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
