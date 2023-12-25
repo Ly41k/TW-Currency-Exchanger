@@ -7,7 +7,6 @@ plugins {
 
 kotlin {
 
-
     androidTarget {
         compilations.all {
             kotlinOptions {
@@ -33,6 +32,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.runtime)
+            implementation(libs.kotlin.reflect)
 
             implementation(libs.odyssey.core)
             implementation(libs.odyssey.compose)

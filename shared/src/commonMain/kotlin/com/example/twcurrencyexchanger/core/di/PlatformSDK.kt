@@ -1,7 +1,10 @@
 package com.example.twcurrencyexchanger.core.di
 
 import com.example.twcurrencyexchanger.core.ktor.ktorModule
+import com.example.twcurrencyexchanger.core.serialization.serializationModule
 import com.example.twcurrencyexchanger.core.settings.settingsModule
+import com.example.twcurrencyexchanger.data.dataModule
+import com.example.twcurrencyexchanger.domain.domainModule
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.direct
@@ -21,7 +24,10 @@ object PlatformSDK {
                 importAll(
                     coreModule,
                     ktorModule,
-                    settingsModule
+                    settingsModule,
+                    dataModule,
+                    domainModule,
+                    serializationModule
                 )
             }.direct
         )

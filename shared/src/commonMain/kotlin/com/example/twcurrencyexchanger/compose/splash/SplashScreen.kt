@@ -1,10 +1,17 @@
 package com.example.twcurrencyexchanger.compose.splash
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.LaunchedEffect
+import com.example.twcurrencyexchanger.core.navigation.NavigationTree
+import ru.alexgladkov.odyssey.compose.extensions.present
+import ru.alexgladkov.odyssey.compose.local.LocalRootController
+import ru.alexgladkov.odyssey.core.LaunchFlag
 
 @Composable
-fun SplashScreen() {
-    Text(text = "SplashScreen", color = Color.Red)
+internal fun SplashScreen() {
+    val rootController = LocalRootController.current
+
+    LaunchedEffect(Unit) {
+        rootController.present(NavigationTree.Main.Dashboard.name, launchFlag = LaunchFlag.SingleNewTask)
+    }
 }
