@@ -1,23 +1,26 @@
 package com.example.twcurrencyexchanger.compose.main.balance
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.example.twcurrencyexchanger.ui.components.TopAppBarView
+import com.adeo.kviewmodel.compose.observeAsState
+import com.adeo.kviewmodel.odyssey.StoredViewModel
+import com.example.twcurrencyexchanger.presentarion.main.balance.BalanceViewModel
+import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceAction
+import ru.alexgladkov.odyssey.compose.local.LocalRootController
 
 @Composable
 fun BalanceScreen() {
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = { TopAppBarView(onSettingButtonClick = {}) },
-    ) {
-        Text(text = "BalanceScreen", color = Color.Red)
+    val rootController = LocalRootController.current
+
+    StoredViewModel(factory = { BalanceViewModel() }) { viewModel ->
+        val state = viewModel.viewStates().observeAsState().value
+        val action = viewModel.viewActions().observeAsState().value
+
+        BalanceView(state = state) { viewModel.obtainEvent(it) }
+
+        when (action) {
+            BalanceAction.OpenSettingsScreen -> {}
+            null -> {}
+        }
     }
 }
-
-
-
