@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.resourcesMultiplatform)
 }
 
 kotlin {
@@ -54,6 +55,8 @@ kotlin {
 
             implementation(libs.settings)
             implementation(libs.settings.noarg)
+
+            implementation(libs.libres.compose)
         }
 
         androidMain.dependencies {
@@ -65,6 +68,12 @@ kotlin {
             implementation(libs.ktor.ios)
         }
     }
+}
+
+libres {
+    generatedClassName = "AppRes"
+    generateNamedArguments = true
+    baseLocaleLanguageCode = "en"
 }
 
 android {
