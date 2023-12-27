@@ -20,10 +20,7 @@ class BalanceInteractorImpl(
     private val _balancesFlow =
         localDataSource.getBalances()
             .filter { it.isNotEmpty() }
-            .mapLatest { items ->
-                items.filter { item -> item.amount > 0 }
-                    .map { item -> item.toBalanceItemModel() }
-            }
+            .mapLatest { items -> items.map { item -> item.toBalanceItemModel() } }
 
     override val balancesFlow: Flow<List<BalanceItemModel>> = _balancesFlow
 

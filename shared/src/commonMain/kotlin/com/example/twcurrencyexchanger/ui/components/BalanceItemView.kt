@@ -32,7 +32,7 @@ fun BalanceItemView(model: BalanceItemModel) {
             )
             Spacer(Modifier.weight(1f))
             Text(
-                text = model.amount,
+                text = model.getStringAmount(),
                 color = Theme.colors.primaryTextColor,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium

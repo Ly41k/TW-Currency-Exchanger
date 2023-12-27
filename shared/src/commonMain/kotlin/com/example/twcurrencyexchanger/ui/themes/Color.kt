@@ -23,8 +23,8 @@ val palette = CurrencyExchangerColors(
     secondaryTextColor = Color(0xFF6B7280),
     thirdTextColor = Color(0xFFFFFFFF),
     dividerColor = Color(0xFFE5E7EB),
-    tagSellColor = Color(0x1844A9F4),
-    tagReceiveColor = Color(0x1844A9F4),
+    tagSellColor = Color(0xFFF05252),
+    tagReceiveColor = Color(0xFF0E9F6E),
     tagSellTextColor = Color(0xFF44A9F4),
     tagReceiveTextColor = Color(0xFF44A9F4)
 )

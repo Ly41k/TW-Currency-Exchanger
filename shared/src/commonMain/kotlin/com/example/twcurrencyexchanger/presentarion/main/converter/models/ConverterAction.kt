@@ -1,4 +1,5 @@
 package com.example.twcurrencyexchanger.presentarion.main.converter.models
 
-class ConverterAction {
+sealed class ConverterAction {
+    data object OpenSettingsScreen : ConverterAction()
 }

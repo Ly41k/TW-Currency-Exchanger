@@ -35,6 +35,7 @@ class ExchangeRatesUpdater(
 
     private val _exchangeRatesUpdateStateFlow = MutableStateFlow(false)
     private val _initializationDatabaseStateFlow = MutableStateFlow(false)
+    private val _initializationStateFlow = MutableStateFlow(false)
 
     private val _enableUpdateEvent =
         MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = DROP_OLDEST)
@@ -57,7 +58,6 @@ class ExchangeRatesUpdater(
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeExchangeRatesUpdaterFlow(scope: CoroutineScope) =
         _exchangeRatesUpdateStateFlow
-            .onEach { println("TESTING_TAG - observeExchangeRatesUpdaterFlow") }
             .onStart { _enableUpdateEvent.tryEmit(Unit) }
             .filter { it }
             .flatMapLatest {
@@ -67,9 +67,7 @@ class ExchangeRatesUpdater(
                     }.flatMapLatest { (item, isDatabaseInited) ->
                         if (!isDatabaseInited) {
                             balanceLocalDataSource.getBalances()
-                                .onEach {
-                                    if (it.isEmpty()) balanceLocalDataSource.initLocalDataSource(item)
-                                }
+                                .onEach { if (it.isEmpty()) balanceLocalDataSource.initLocalDataSource(item) }
                                 .map {
                                     _initializationDatabaseStateFlow.tryEmit(true)
                                     Unit
@@ -92,12 +90,15 @@ class ExchangeRatesUpdater(
             .flowOn(Dispatchers.IO)
             .launchIn(scope)
 
-
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeExchangeRatesUpdateFlow(scope: CoroutineScope) = _enableUpdateEvent
-        .onEach { println("TESTING_TAG - observeExchangeRatesUpdateFlow") }
         .mapLatest {
-            delay(CURRENCY_UPDATE_DELAY_BY_DEFAULT)
+            val initialization = _initializationStateFlow.value
+            if (initialization) {
+                delay(CURRENCY_UPDATE_DELAY_BY_DEFAULT)
+            } else {
+                _initializationStateFlow.tryEmit(true)
+            }
             _exchangeRatesUpdateStateFlow.tryEmit(true)
             Unit
         }
