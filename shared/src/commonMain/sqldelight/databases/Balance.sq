@@ -1,0 +1,20 @@
+CREATE TABLE BalanceEntity (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    type TEXT NOT NULL,
+    amount REAL NOT NULL,
+    is_base_type INTEGER NOT NULL
+);
+
+getBalances:
+SELECT *
+FROM BalanceEntity
+ORDER BY is_base_type DESC, amount DESC;
+
+insertBalanceEntity:
+INSERT OR REPLACE
+INTO BalanceEntity(id,type,amount,is_base_type)
+VALUES (?,?,?,?);
+
+deleteAll:
+DELETE
+FROM BalanceEntity;

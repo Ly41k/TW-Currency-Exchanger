@@ -2,21 +2,17 @@
 agp = "8.2.0"
 kotlin = "1.9.20"
 compose = "1.5.10"
-
 appcompat = "1.6.1"
 activity-compose = "1.7.2"
-
 kodein = "7.20.1"
 odyssey = "1.3.40"
 kviewmodel = "0.14"
-
 serialization = "1.5.0"
-
 material = "1.9.0"
-
 ktor = "2.3.5"
 settings = "1.1.1"
 libres = "1.2.2"
+sqldelight = "2.0.1"
 
 [libraries]
 kodein = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }
@@ -24,16 +20,18 @@ kodein = { module = "org.kodein.di:kodein-di", version.ref = "kodein" }
 odyssey-core = { module = "io.github.alexgladkov:odyssey-core", version.ref = "odyssey" }
 odyssey-compose = { module = "io.github.alexgladkov:odyssey-compose", version.ref = "odyssey" }
 
-kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
-
-
 kviewmodel-core = { module = "com.adeo:kviewmodel", version.ref = "kviewmodel" }
 kviewmodel-compose = { module = "com.adeo:kviewmodel-compose", version.ref = "kviewmodel" }
 kviewmodel-odyssey = { module = "com.adeo:kviewmodel-odyssey", version.ref = "kviewmodel" }
 
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 
 android-material = { module = "com.google.android.material:material", version.ref = "material" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+
+libres-compose = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-json = { module = "io.ktor:ktor-client-json", version.ref = "ktor" }
@@ -42,31 +40,19 @@ ktor-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", versio
 ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-ktor-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
 
 settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "settings" }
 settings-noarg = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "settings" }
 
-
-
-
-
-
-
-
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
-libres-compose = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
-
+sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 resourcesMultiplatform = { id = "io.github.skeptick.libres", version.ref = "libres" }
-
-
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

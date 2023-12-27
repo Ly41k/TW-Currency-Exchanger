@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.resourcesMultiplatform)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -13,17 +14,6 @@ kotlin {
             kotlinOptions {
                 jvmTarget = JavaVersion.VERSION_17.toString()
             }
-        }
-    }
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-            isStatic = true
         }
     }
 
@@ -57,15 +47,13 @@ kotlin {
             implementation(libs.settings.noarg)
 
             implementation(libs.libres.compose)
+            implementation(libs.sqldelight.coroutines.extensions)
         }
 
         androidMain.dependencies {
             implementation(libs.android.material)
             implementation(libs.ktor.android)
-        }
-
-        iosMain.dependencies {
-            implementation(libs.ktor.ios)
+            implementation(libs.sqldelight.android)
         }
     }
 }
@@ -74,6 +62,16 @@ libres {
     generatedClassName = "AppRes"
     generateNamedArguments = true
     baseLocaleLanguageCode = "en"
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("com.example.twcurrencyexchanger")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/databases/schema"))
+            migrationOutputDirectory.set(file("src/commonMain/sqldelight/migrations"))
+        }
+    }
 }
 
 android {

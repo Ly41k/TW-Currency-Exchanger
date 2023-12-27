@@ -1,3 +1,3 @@
 package com.example.twcurrencyexchanger.core.di
 
-expect class PlatformConfiguration
+//expect class PlatformConfiguration
