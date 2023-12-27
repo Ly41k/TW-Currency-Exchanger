@@ -6,7 +6,7 @@ import databases.BalanceEntity
 import kotlin.math.min
 
 fun BalanceEntity.toBalanceItem(): BalanceItem =
-    BalanceItem(id = id, type = type, amount = amount, isBaseType = is_base_type.longToBoolean())
+    BalanceItem(type = type, amount = amount, isBaseType = is_base_type.longToBoolean())
 
 fun BalanceItem.toBalanceItemModel(): BalanceItemModel {
     return BalanceItemModel(

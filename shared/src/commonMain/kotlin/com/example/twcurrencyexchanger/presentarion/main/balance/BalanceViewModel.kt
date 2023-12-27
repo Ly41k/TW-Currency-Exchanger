@@ -1,13 +1,16 @@
 package com.example.twcurrencyexchanger.presentarion.main.balance
 
 import com.adeo.kviewmodel.BaseSharedViewModel
+import com.example.twcurrencyexchanger.api.CurrencyRepository
 import com.example.twcurrencyexchanger.core.di.Inject
+import com.example.twcurrencyexchanger.domain.BalanceLocalDataSource
 import com.example.twcurrencyexchanger.domain.interactors.BalanceInteractor
 import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceAction
 import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceEvent
+import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceItemModel
 import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceViewState
+import com.example.twcurrencyexchanger.utils.ExchangeRatesUpdater
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +21,9 @@ class BalanceViewModel : BaseSharedViewModel<BalanceViewState, BalanceAction, Ba
 ) {
 
     private val balanceInteractor: BalanceInteractor = Inject.instance()
+    private val currencyRepository: CurrencyRepository = Inject.instance()
+    private val localDataSource: BalanceLocalDataSource = Inject.instance()
+    private val updater = ExchangeRatesUpdater(currencyRepository, localDataSource)
     override fun obtainEvent(viewEvent: BalanceEvent) {
         when (viewEvent) {
             BalanceEvent.SettingClick -> {}
@@ -25,15 +31,23 @@ class BalanceViewModel : BaseSharedViewModel<BalanceViewState, BalanceAction, Ba
     }
 
     init {
+        startUpdater()
+        observeBalances()
+    }
+
+    private fun startUpdater() {
+        updater.start()
+    }
+
+    private fun observeBalances() {
         balanceInteractor.balancesFlow
             .filter { it.isNotEmpty() }
-            .onEach {
-                println("TESTING_TAG - ${it.size}")
-                viewState = viewState.copy(items = it)
-            }
+            .onEach { obtainBalances(it) }
             .flowOn(Dispatchers.IO)
             .launchIn(viewModelScope)
+    }
 
-
+    private fun obtainBalances(balances: List<BalanceItemModel>) {
+        viewState = viewState.copy(items = balances)
     }
 }

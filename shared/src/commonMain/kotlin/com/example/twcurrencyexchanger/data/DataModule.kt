@@ -15,7 +15,7 @@ import org.kodein.di.singleton
 
 val dataModule = DI.Module("dataModule") {
     bind<CurrencyRepository>() with singleton {
-        CurrencyRepositoryImpl(instance(), instance())
+        CurrencyRepositoryImpl(instance(), instance(), instance())
     }
 
     bind<KtorCurrencyRemoteDataSource>() with provider {
