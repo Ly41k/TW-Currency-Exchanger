@@ -1,9 +1,9 @@
 package com.example.twcurrencyexchanger.presentarion.main.balance
 
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.adeo.kviewmodel.BaseSharedViewModel
-import com.example.twcurrencyexchanger.api.CurrencyRepository
 import com.example.twcurrencyexchanger.core.di.Inject
-import com.example.twcurrencyexchanger.domain.BalanceLocalDataSource
 import com.example.twcurrencyexchanger.domain.interactors.BalanceInteractor
 import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceAction
 import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceEvent
@@ -16,17 +16,16 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class BalanceViewModel : BaseSharedViewModel<BalanceViewState, BalanceAction, BalanceEvent>(
+class BalanceViewModel(
+    private val balanceInteractor: BalanceInteractor = Inject.instance(),
+    private val exchangeRatesUpdater: ExchangeRatesUpdater = Inject.instance()
+) : BaseSharedViewModel<BalanceViewState, BalanceAction, BalanceEvent>(
     initialState = BalanceViewState()
-) {
+), DefaultLifecycleObserver {
 
-    private val balanceInteractor: BalanceInteractor = Inject.instance()
-    private val currencyRepository: CurrencyRepository = Inject.instance()
-    private val localDataSource: BalanceLocalDataSource = Inject.instance()
-    private val updater = ExchangeRatesUpdater(currencyRepository, localDataSource)
     override fun obtainEvent(viewEvent: BalanceEvent) {
         when (viewEvent) {
-            BalanceEvent.SettingClick -> {}
+            BalanceEvent.SettingClick -> openSettings()
         }
     }
 
@@ -36,7 +35,7 @@ class BalanceViewModel : BaseSharedViewModel<BalanceViewState, BalanceAction, Ba
     }
 
     private fun startUpdater() {
-        updater.start()
+        exchangeRatesUpdater.start()
     }
 
     private fun observeBalances() {
@@ -49,5 +48,14 @@ class BalanceViewModel : BaseSharedViewModel<BalanceViewState, BalanceAction, Ba
 
     private fun obtainBalances(balances: List<BalanceItemModel>) {
         viewState = viewState.copy(items = balances)
+    }
+
+    private fun openSettings() {
+        viewAction = BalanceAction.OpenSettingsScreen
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        viewAction = null
     }
 }

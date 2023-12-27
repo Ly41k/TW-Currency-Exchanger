@@ -27,7 +27,7 @@ fun BalanceView(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { TopAppBarView { eventHandler(BalanceEvent.SettingClick) } },
-    ) {
+    ) { padding ->
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
