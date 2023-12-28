@@ -3,12 +3,8 @@ package com.example.twcurrencyexchanger.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,13 +36,13 @@ fun TopAppBarView(
         modifier = modifier,
         backgroundColor = Theme.colors.primaryAction,
         actions = {
-            IconButton(onClick = onSettingButtonClick) {
-                Icon(
-                    imageVector = Icons.Default.Settings,
-                    contentDescription = AppRes.string.settings,
-                    tint = Theme.colors.primaryBackground
-                )
-            }
+//            IconButton(onClick = onSettingButtonClick) {
+//                Icon(
+//                    imageVector = Icons.Default.Settings,
+//                    contentDescription = AppRes.string.settings,
+//                    tint = Theme.colors.primaryBackground
+//                )
+//            }
         }
     )
 }

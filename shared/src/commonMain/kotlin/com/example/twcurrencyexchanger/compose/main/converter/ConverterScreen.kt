@@ -28,12 +28,10 @@ fun ConverterScreen() {
         when (action) {
             ConverterAction.OpenSettingsScreen -> {}
             is ConverterAction.OpenAlertDialog -> {
+                viewModel.clearAction()
                 keyboardController?.hide()
                 modalController.present(alertConfiguration) { key ->
-                    AlertDialogScreen(message = action.message) {
-                        viewModel.clearAction()
-                        modalController.popBackStack(key)
-                    }
+                    AlertDialogScreen(message = action.message) { modalController.popBackStack(key) }
                 }
             }
 

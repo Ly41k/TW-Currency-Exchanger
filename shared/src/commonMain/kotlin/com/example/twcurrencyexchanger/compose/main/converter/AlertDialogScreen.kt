@@ -18,12 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.twcurrencyexchanger.AppRes
 import com.example.twcurrencyexchanger.ui.themes.Theme
 
 @Composable
 fun AlertDialogScreen(
     message: String,
-    onCloseClick: () -> Unit
+    onCloseClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.wrapContentSize()
@@ -32,7 +33,7 @@ fun AlertDialogScreen(
     ) {
         Text(
             modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
-            text = "Currency converted",
+            text = AppRes.string.currency_converted,
             fontSize = 14.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Medium,
@@ -57,7 +58,12 @@ fun AlertDialogScreen(
             modifier = Modifier.fillMaxWidth().height(48.dp).clickable { onCloseClick.invoke() },
             contentAlignment = Alignment.Center
         ) {
-            Text(text = "Done", color = Color.Blue, fontWeight = FontWeight.Medium, fontSize = 14.sp)
+            Text(
+                text = AppRes.string.done,
+                color = Color.Blue,
+                fontWeight = FontWeight.Medium,
+                fontSize = 14.sp
+            )
         }
     }
 }

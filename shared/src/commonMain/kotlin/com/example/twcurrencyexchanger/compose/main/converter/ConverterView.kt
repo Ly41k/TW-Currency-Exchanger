@@ -138,7 +138,7 @@ fun ConverterView(
                     shape = RoundedCornerShape(50)
                 ) {
                     Text(
-                        text = "Submit".uppercase(),
+                        text = AppRes.string.submit.uppercase(),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Normal
                     )

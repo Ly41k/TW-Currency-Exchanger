@@ -14,6 +14,7 @@ import com.example.twcurrencyexchanger.presentarion.main.converter.models.Conver
 import com.example.twcurrencyexchanger.presentarion.main.converter.models.ConverterError
 import com.example.twcurrencyexchanger.presentarion.main.converter.models.ConverterEvent
 import com.example.twcurrencyexchanger.presentarion.main.converter.models.ConverterViewState
+import com.example.twcurrencyexchanger.presentarion.main.converter.models.ConvertingItem
 import com.example.twcurrencyexchanger.utils.ExchangeRatesUpdater
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,8 +34,8 @@ class ConverterViewModel(
 ), DefaultLifecycleObserver {
 
     private var converterJob: Job? = null
+
     override fun obtainEvent(viewEvent: ConverterEvent) {
-        println("TESTING_TAG - viewEvent - $viewEvent")
         when (viewEvent) {
             is ConverterEvent.SelectedSellCurrencyChanged -> obtainSelectedSellCurrencyChanged(viewEvent.value)
             is ConverterEvent.SellAmountChanged -> obtainSellAmountChanged(viewEvent.value)
@@ -63,40 +64,46 @@ class ConverterViewModel(
             val fee = converterInteractor.getFeeByAmount(sellAmount)
 
             when {
-                sellAmount == 0.0 -> {
-                    viewState = viewState.copy(
-                        errorType = ConverterError.WrongAmount
-                    )
-                }
+                sellAmount == 0.0 -> viewState = viewState.copy(errorType = ConverterError.WrongAmount)
 
-                sellAmount > currentBalance -> {
-                    viewState = viewState.copy(
-                        errorType = ConverterError.NotEnoughMoney
-                    )
-                }
+                viewState.selectedSellCurrency == viewState.selectedReceiveCurrency ->
+                    viewState = viewState.copy(errorType = ConverterError.WrongCurrency)
 
-                (sellAmount + fee) > currentBalance -> {
-                    viewState = viewState.copy(
-                        errorType = ConverterError.NotEnoughMoneyForFee
-                    )
-                }
+                sellAmount > currentBalance ->
+                    viewState = viewState.copy(errorType = ConverterError.NotEnoughMoney)
+
+                (sellAmount + fee) > currentBalance ->
+                    viewState = viewState.copy(errorType = ConverterError.NotEnoughMoneyForFee)
 
                 else -> {
                     viewState = viewState.copy(fee = fee)
-                    openAlertDialog()
+                    performConverting()
                 }
             }
         }
     }
 
-    private fun openAlertDialog() {
-        val message = AppRes.string.alert_message.format(
-            sellAmount = limitDecimals(viewState.sellAmount, 2),
+    private suspend fun performConverting() {
+        val convertingItem = ConvertingItem(
+            currentBalances = viewState.items,
+            sellAmount = viewState.sellAmount,
             sellCurrencyType = viewState.selectedSellCurrency,
-            receiveAmount = limitDecimals(viewState.receiveAmount, 2),
+            receiveAmount = viewState.receiveAmount,
             receiveCurrencyType = viewState.selectedReceiveCurrency,
-            feeAmount = limitDecimals(viewState.fee, 2),
-            feeCurrencyType = viewState.selectedSellCurrency
+            fee = viewState.fee
+        )
+        balanceInteractor.updateBalance(convertingItem)
+        openAlertDialog(convertingItem)
+    }
+
+    private fun openAlertDialog(item: ConvertingItem) {
+        val message = AppRes.string.alert_message.format(
+            sellAmount = limitDecimals(item.sellAmount, 2),
+            sellCurrencyType = item.sellCurrencyType,
+            receiveAmount = limitDecimals(item.receiveAmount, 2),
+            receiveCurrencyType = item.receiveCurrencyType,
+            feeAmount = limitDecimals(item.fee, 2),
+            feeCurrencyType = item.sellCurrencyType
         )
         viewAction = ConverterAction.OpenAlertDialog(message)
     }
@@ -127,10 +134,12 @@ class ConverterViewModel(
 
     private fun obtainBalances(balances: List<BalanceItemModel>) {
         viewState = viewState.copy(
-            items = balances.filter { it.amount > 0 },
-            sellCurrencyItems = balances.filter { it.amount > 0 }.map { it.type },
+            items = balances.sortedBy { !it.baseType },
+            sellCurrencyItems = balances.filter { it.baseType }.map { it.type },
             selectedSellCurrency = balances.firstOrNull { it.baseType }?.type.orEmpty(),
-            selectedReceiveCurrency = balances.firstOrNull { it.baseType }?.type.orEmpty(),
+            selectedReceiveCurrency = if (viewState.selectedReceiveCurrency.isEmpty())
+                balances.firstOrNull { it.baseType }?.type.orEmpty()
+            else viewState.selectedReceiveCurrency,
             receiveCurrencyItems = balances.map { it.type },
         )
     }
