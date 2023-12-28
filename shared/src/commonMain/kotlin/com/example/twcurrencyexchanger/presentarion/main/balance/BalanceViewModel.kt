@@ -1,7 +1,5 @@
 package com.example.twcurrencyexchanger.presentarion.main.balance
 
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.adeo.kviewmodel.BaseSharedViewModel
 import com.example.twcurrencyexchanger.core.di.Inject
 import com.example.twcurrencyexchanger.domain.interactors.BalanceInteractor
@@ -22,7 +20,7 @@ class BalanceViewModel(
     private val exchangeRatesUpdater: ExchangeRatesUpdater = Inject.instance()
 ) : BaseSharedViewModel<BalanceViewState, BalanceAction, BalanceEvent>(
     initialState = BalanceViewState()
-), DefaultLifecycleObserver {
+) {
 
     override fun obtainEvent(viewEvent: BalanceEvent) {
         when (viewEvent) {
@@ -54,10 +52,5 @@ class BalanceViewModel(
 
     private fun openSettings() {
         viewAction = BalanceAction.OpenSettingsScreen
-    }
-
-    override fun onStop(owner: LifecycleOwner) {
-        super.onStop(owner)
-        viewAction = null
     }
 }

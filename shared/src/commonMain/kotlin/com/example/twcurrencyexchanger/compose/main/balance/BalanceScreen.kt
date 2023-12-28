@@ -5,12 +5,9 @@ import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import com.example.twcurrencyexchanger.presentarion.main.balance.BalanceViewModel
 import com.example.twcurrencyexchanger.presentarion.main.balance.models.BalanceAction
-import ru.alexgladkov.odyssey.compose.local.LocalRootController
 
 @Composable
 fun BalanceScreen() {
-
-    val rootController = LocalRootController.current
 
     StoredViewModel(factory = { BalanceViewModel() }) { viewModel ->
         val state = viewModel.viewStates().observeAsState().value

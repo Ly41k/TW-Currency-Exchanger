@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.twcurrencyexchanger.AppRes
 import com.example.twcurrencyexchanger.ui.themes.Theme
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TabConfiguration
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TabItem
@@ -20,7 +21,7 @@ class BalanceTab : TabItem() {
         get() {
 
             return TabConfiguration(
-                title = "Balance",
+                title = AppRes.string.balance,
                 selectedColor = Theme.colors.primaryAction,
                 unselectedColor = Theme.colors.secondaryTextColor,
                 titleStyle = TextStyle(
@@ -39,7 +40,7 @@ class ConverterTab : TabItem() {
         get() {
 
             return TabConfiguration(
-                title = "Convert",
+                title = AppRes.string.convert,
                 selectedColor = Theme.colors.primaryAction,
                 unselectedColor = Theme.colors.secondaryTextColor,
                 titleStyle = TextStyle(

@@ -13,7 +13,7 @@ import org.kodein.di.instance
 import org.kodein.di.provider
 import org.kodein.di.singleton
 
-val domainModule1 = DI.Module("domainModule") {
+val domainModule = DI.Module("domainModule") {
     bind<CurrencyMapper>() with provider { CurrencyMapperImpl(instance()) }
 
     bind<BalanceInteractor>() with singleton { BalanceInteractorImpl(instance(), instance()) }
