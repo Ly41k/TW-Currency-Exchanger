@@ -4,6 +4,7 @@ import com.example.twcurrencyexchanger.api.CurrencyRepository
 import com.example.twcurrencyexchanger.core.store.ClearableBaseStore
 import com.example.twcurrencyexchanger.data.database.BalanceLocalDataSourceImpl
 import com.example.twcurrencyexchanger.data.ktor.KtorCurrencyRemoteDataSource
+import com.example.twcurrencyexchanger.data.settings.SettingsDataSource
 import com.example.twcurrencyexchanger.data.store.ExchangeRatesStore
 import com.example.twcurrencyexchanger.domain.BalanceLocalDataSource
 import com.example.twcurrencyexchanger.domain.ExchangeRatesItem
@@ -25,4 +26,7 @@ val dataModule = DI.Module("dataModule") {
     bind<ClearableBaseStore<ExchangeRatesItem>>() with singleton { ExchangeRatesStore() }
 
     bind<BalanceLocalDataSource>() with singleton { BalanceLocalDataSourceImpl(instance()) }
+
+    bind<SettingsDataSource>() with singleton { SettingsDataSource(instance()) }
+
 }

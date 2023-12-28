@@ -2,6 +2,8 @@ package com.example.twcurrencyexchanger.domain
 
 import com.example.twcurrencyexchanger.domain.interactors.BalanceInteractor
 import com.example.twcurrencyexchanger.domain.interactors.BalanceInteractorImpl
+import com.example.twcurrencyexchanger.domain.interactors.ConverterInteractor
+import com.example.twcurrencyexchanger.domain.interactors.ConverterInteractorImpl
 import com.example.twcurrencyexchanger.domain.mapper.CurrencyMapper
 import com.example.twcurrencyexchanger.domain.mapper.CurrencyMapperImpl
 import com.example.twcurrencyexchanger.utils.ExchangeRatesUpdater
@@ -17,4 +19,6 @@ val domainModule = DI.Module("domainModule") {
     bind<BalanceInteractor>() with singleton { BalanceInteractorImpl(instance()) }
 
     bind<ExchangeRatesUpdater>() with singleton { ExchangeRatesUpdater(instance(), instance()) }
+
+    bind<ConverterInteractor>() with provider { ConverterInteractorImpl(instance()) }
 }

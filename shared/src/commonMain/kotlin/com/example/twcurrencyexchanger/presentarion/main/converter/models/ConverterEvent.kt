@@ -8,4 +8,6 @@ sealed class ConverterEvent {
 
     data class SelectedSellCurrencyChanged(val value: String) : ConverterEvent()
     data object ReceiveCurrencyPickerStateChanged : ConverterEvent()
+
+    data object SubmitClick : ConverterEvent()
 }

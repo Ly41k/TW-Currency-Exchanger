@@ -6,4 +6,7 @@
     <string name="currency_exchange">Currency Exchange</string>
     <string name="sell">Sell</string>
     <string name="receive">Receive</string>
+    <string name="alert_message">You have converted ${sellAmount} ${sellCurrencyType} to ${receiveAmount} ${receiveCurrencyType}. Commission Fee: ${feeAmount} ${feeCurrencyType}</string>
 </resources>
+
+<!--You have converted 100.00 EUR to 110.30 USD. Commission Fee: 0.70 EUR-->

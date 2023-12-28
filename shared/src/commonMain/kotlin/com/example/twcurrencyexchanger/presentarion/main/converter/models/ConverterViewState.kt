@@ -10,14 +10,14 @@ data class ConverterViewState(
     val selectedReceiveCurrency: String = "",
     val sellAmount: Double = 0.0,
     val receiveAmount: Double = 0.0,
+    val fee: Double = 0.0,
     val sellCurrencyItems: List<String> = emptyList(),
     val receiveCurrencyItems: List<String> = emptyList(),
-
-    val isErrorConversion: Boolean = false,
     val isExpandedSellCurrencyList: Boolean = false,
     val isExpandedReceiveCurrencyList: Boolean = false,
     val currencyRates: List<RateItem> = emptyList(),
-    val currentRate: RateItem? = null
+    val currentRate: RateItem? = null,
+    val errorType: ConverterError? = null,
 ) {
     fun getReceiveAmountFormatted(): String = limitDecimals(receiveAmount, 2)
 
