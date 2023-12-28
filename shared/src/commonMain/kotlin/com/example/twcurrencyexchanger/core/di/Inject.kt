@@ -2,9 +2,7 @@ package com.example.twcurrencyexchanger.core.di
 
 import org.kodein.di.DirectDI
 import org.kodein.di.instance
-import kotlin.native.concurrent.ThreadLocal
 
-@ThreadLocal
 object Inject {
 
     private var _di: DirectDI? = null
